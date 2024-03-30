@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { WishItem } from '../shared/models/wishItem';
 import { NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
@@ -30,7 +30,9 @@ export class AppComponent {
     new WishItem('jklasdlflasdk', true),
   ];
 
-  filter: any = () => {};
+  ngOnInit() {}
+
+  filter: any = (item: WishItem) => item;
 
   get visibleItems(): WishItem[] {
     return this.items.filter(this.filter);
