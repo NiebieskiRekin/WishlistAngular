@@ -5,12 +5,7 @@ import { NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { WishListComponent } from './wish-list/wish-list.component';
 import { AddWishFormComponent } from './add-wish-form/add-wish-form.component';
-
-const filters = [
-  (item: WishItem) => item,
-  (item: WishItem) => !item.isComplete,
-  (item: WishItem) => item.isComplete,
-];
+import { WishFilterComponent } from './wish-filter/wish-filter.component';
 
 @Component({
   selector: 'app-root',
@@ -23,6 +18,7 @@ const filters = [
     FormsModule,
     WishListComponent,
     AddWishFormComponent,
+    WishFilterComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -33,10 +29,10 @@ export class AppComponent {
     new WishItem('Get faskjdfal'),
     new WishItem('jklasdlflasdk', true),
   ];
-  title = 'wishlist';
-  listFilter: String = '0';
+
+  filter: any = () => {};
 
   get visibleItems(): WishItem[] {
-    return this.items.filter(filters[Number(this.listFilter)]);
+    return this.items.filter(this.filter);
   }
 }
