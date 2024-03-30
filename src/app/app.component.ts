@@ -3,11 +3,27 @@ import { RouterOutlet } from '@angular/router';
 import { WishItem } from '../shared/models/wishItem';
 import { NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { WishListComponent } from './wish-list/wish-list.component';
+import { AddWishFormComponent } from './add-wish-form/add-wish-form.component';
+
+const filters = [
+  (item: WishItem) => item,
+  (item: WishItem) => !item.isComplete,
+  (item: WishItem) => item.isComplete,
+];
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NgFor, NgIf, NgTemplateOutlet, FormsModule],
+  imports: [
+    RouterOutlet,
+    NgFor,
+    NgIf,
+    NgTemplateOutlet,
+    FormsModule,
+    WishListComponent,
+    AddWishFormComponent,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -18,14 +34,9 @@ export class AppComponent {
     new WishItem('jklasdlflasdk', true),
   ];
   title = 'wishlist';
-  newWishText = '';
+  listFilter: String = '0';
 
-  toggleItem(e: any, i: number) {
-    console.log(e, i);
-  }
-
-  addNewWish() {
-    this.items.push(new WishItem(this.newWishText));
-    this.newWishText = '';
+  get visibleItems(): WishItem[] {
+    return this.items.filter(filters[Number(this.listFilter)]);
   }
 }
